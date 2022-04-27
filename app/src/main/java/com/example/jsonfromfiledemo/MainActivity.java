@@ -5,8 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
 
         String json = readFile("testdata.json");
         Log.d(TAG,json);
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Mountain>>() {}.getType();
+        List<Mountain> listOfMountains = gson.fromJson(json, type);
+        Log.d(TAG,"Number of element"+listOfMountains.size());
+        Log.d(TAG,"Element 0"+listOfMountains.get(0).toString());
     }
     @SuppressWarnings("SameParameterValue")
     private String readFile(String fileName) {
